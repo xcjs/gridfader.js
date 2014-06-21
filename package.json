@@ -1,0 +1,8 @@
+{
+	"name": "gridfader",
+	"description": "HTML 5 canvas animation with fading blocks on a grid derived from a provided color palette.",
+	"homepage": "https://github.com/xcjs/gridfader",
+	"devDependencies": {
+    	"minify": ""
+	}
+}
