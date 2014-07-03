@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+	<head>
+		<title>gridfader.js Demo</title>
+
+		<style>
+			* {
+				border-width: 0;
+				margin: 0;
+				padding: 0;
+			}
+
+			html, body {
+				background-color: #333;
+				height: 100%;
+			}
+
+			#gridfader {
+				display: block;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="gridfader"></canvas>
+		<script src="gridfader.js"></script>
+		<script>
+			(function() {
+				fader = new GridFader('gridfader');
+
+				fader.palette.push(new fader.ColorManagement.Color({ r: 228, g: 77, b: 38 }));	// HTML5 Orange
+				fader.palette.push(new fader.ColorManagement.Color({ r: 2, g: 112, b: 187 }));	// CSS3 Blue
+				fader.palette.push(new fader.ColorManagement.Color({ r: 214, g: 186, b: 51 }));	// JavaScript Yellow
+
+				fader.gridColor = new fader.ColorManagement.Color({ r: 255, g: 255, b: 255, a: .1 });
+
+				fader.boxSize = 50
+				fader.gridSize = 5;
+
+				fader.BindEvents();
+			})();
+		</script>
+	</body>
+</html>
