@@ -1,36 +1,26 @@
+'use strict';
+
 var GridFader = function(canvasId) {
-	var canvas;
-	var brush;				
+	this.palette = new Array();
+	this.gridColor = null;	
+	this.canvas;
+	this.brush;
+	this.boxSize;
+	this.gridSize;
 
-	var boxSize;
-
-	var gridSize;
-	var gridColor;
-
-	var palette = new Array();				
+	var self = this;	
 
 	var clock = 0;
 	var clockCycle = 0;
 	var clockSpeed = 500;
 
-	this.Init = function() {
-		boxSize = 50;
-
-		gridSize = 5;
-		gridColor = new ColorManagement.Color({ r: 255, g: 255, b: 255, a: .1 });
-
-		palette.push(new ColorManagement.Color({ r: 228, g: 77, b: 38 }));	// HTML5 Orange
-		palette.push(new ColorManagement.Color({ r: 2, g: 112, b: 187 }));	// CSS3 Blue
-		palette.push(new ColorManagement.Color({ r: 214, g: 186, b: 51 }));	// JavaScript Yellow
-
+	this.BindEvents = function() {
 		window.onload = Events.Init;
 		window.onresize = Events.Resize;
 	};
 
-	var ColorManagement = {
+	this.ColorManagement = {
 		Color: function(obj) {
-			var self = this;
-
 			this.r = 0;
 			this.g = 0;
 			this.b = 0;
@@ -45,27 +35,29 @@ var GridFader = function(canvasId) {
 			}					
 
 			this.Darken = function(amount) {
-				darkerColor = new ColorManagement.Color();
+				var darkerColor = new self.ColorManagement.Color();
 
-				darkerColor.r = Math.floor(self.r - amount >= 0 ? self.r - amount : 0);
-				darkerColor.g = Math.floor(self.g - amount >= 0 ? self.g - amount : 0);
-				darkerColor.b = Math.floor(self.b - amount >= 0 ? self.b - amount : 0);
+				darkerColor.r = Math.floor(this.r - amount >= 0 ? this.r - amount : 0);
+				darkerColor.g = Math.floor(this.g - amount >= 0 ? this.g - amount : 0);
+				darkerColor.b = Math.floor(this.b - amount >= 0 ? this.b - amount : 0);
 
-				darkerColor.a = self.a;
+				darkerColor.a = this.a;
 
 				return darkerColor;
 			};
 
 			this.toString = function() {
-				return 'rgba(' + self.r + ', ' + self.g + ', ' + self.b + ', ' + self.a + ')';
+				return 'rgba(' + Math.floor(this.r) + ', ' + Math.floor(this.g) + ', ' + Math.floor(this.b) + ', ' + this.a + ')';
 			};	
 		},
 
 		GetRandomColor: function() {
+			var palette = self.palette;
+
 			var index = Math.floor(Math.random() * (palette.length - 1 - 0 + 1)) + 0;
 			var refColor = palette[index];
 
-			var color = new ColorManagement.Color();
+			var color = new self.ColorManagement.Color();
 			color.r = refColor.r;
 			color.g = refColor.g;
 			color.b = refColor.b;
@@ -77,15 +69,15 @@ var GridFader = function(canvasId) {
 
 	var Environment = {
 		SetCanvasSize: function() {
-			canvas.height = window.innerHeight;
-			canvas.width = window.innerWidth;
+			self.canvas.height = window.innerHeight;
+			self.canvas.width = window.innerWidth;
 		}
 	};
 
 	var Events = {
 		Init: function() {
-			canvas = document.getElementById(canvasId);
-			brush = canvas.getContext('2d');
+			self.canvas = document.getElementById(canvasId);
+			self.brush = self.canvas.getContext('2d');
 
 			Events.Resize();
 		},
@@ -94,15 +86,15 @@ var GridFader = function(canvasId) {
 			clearInterval(clock);
 
 			Environment.SetCanvasSize();
-			DrawGrid();
-			SquareManagement.GetAllSquares();
+			self.DrawGrid();
+			self.SquareManagement.GetAllSquares();
 			
 			clock = setInterval(Events.Tick, clockSpeed);
 		},
 
 		Tick: function()  {
 			if(clockCycle === 7) {
-				var square = SquareManagement.GetRandomSquare();
+				var square = self.SquareManagement.GetRandomSquare();
 
 				if(square.State === null) {
 					square.FadeIn();
@@ -119,7 +111,7 @@ var GridFader = function(canvasId) {
 			}
 
 			var i = 0;
-			var squares = SquareManagement.Squares;
+			var squares = self.SquareManagement.Squares;
 
 			while(i < squares.length) {
 				var square = squares[i];
@@ -140,7 +132,13 @@ var GridFader = function(canvasId) {
 		}
 	};
 
-	var DrawGrid = function() {	
+	this.DrawGrid = function() {	
+		var brush = self.brush;
+		var canvas = self.canvas;
+		var gridColor = self.gridColor;
+		var gridSize = self.gridSize;
+		var boxSize = self.boxSize;
+
 		var i = 0;
 		var startingPoint = 0;							
 
@@ -177,10 +175,8 @@ var GridFader = function(canvasId) {
 		brush.closePath();									
 	};
 
-	var SquareManagement = {
+	this.SquareManagement = {
 		Square: function() {
-			var self = this;
-
 			this.Color = null;
 			this.Length = 0;
 			this.X = 0;
@@ -189,29 +185,32 @@ var GridFader = function(canvasId) {
 			this.State = null;
 
 			this.Clear = function() {
-				brush.clearRect(self.X, self.Y, self.Length, self.Length);
+				self.brush.clearRect(this.X, this.Y, this.Length, this.Length);
 			};
 
 			this.Destroy = function() {							
-				self.Clear();
-				self.Color = null;
-				self.State = null;
+				this.Clear();
+				this.Color = null;
+				this.State = null;
 			};
 
 			this.Draw = function() {
-				var grd = brush.createRadialGradient(
-	      			self.X + self.Length / 2, self.Y + self.Length / 2, 0, 
-	      			self.X + self.Length / 2, self.Y + self.Length / 2, boxSize);
+				var brush = self.brush;
+				var boxSize = self.boxSize;
 
-				self.Clear();
+				var grd = brush.createRadialGradient(
+	      			this.X + this.Length / 2, this.Y + this.Length / 2, 0, 
+	      			this.X + this.Length / 2, this.Y + this.Length / 2, boxSize);
+
+				this.Clear();
 					
 				brush.beginPath();
 
-				grd.addColorStop(0, self.Color);
-      			grd.addColorStop(1, self.Color.Darken(64));
+				grd.addColorStop(0, this.Color);
+      			grd.addColorStop(1, this.Color.Darken(64));
 		    	
 		    	brush.fillStyle = grd;
-		    	brush.fillRect(self.X, self.Y, self.Length, self.Length);	
+		    	brush.fillRect(this.X, this.Y, this.Length, this.Length);	
 				
 				brush.stroke();
 
@@ -220,29 +219,29 @@ var GridFader = function(canvasId) {
 			}
 
 			this.FadeIn = function() {
-				self.State = self.States.FadingIn;
+				this.State = this.States.FadingIn;
 
-				if(self.Color === null) {
-					self.Color = ColorManagement.GetRandomColor();
-					self.Color.a = 0.0;
+				if(this.Color === null) {
+					this.Color = self.ColorManagement.GetRandomColor();
+					this.Color.a = 0.0;
 				}
-				else if(self.Color.a >= 0.5) {
-					self.State = self.States.Full;
+				else if(this.Color.a >= 0.5) {
+					this.State = this.States.Full;
 				}
 				else {
-					self.Color.a += .01;
+					this.Color.a += .01;
 				}										
 			};
 
 			this.FadeOut = function() {
-				if(self.Color.a >= .01)
+				if(this.Color.a >= .01)
 				{
-					self.State = self.States.FadingOut;
-					self.Color.a -= .01;
+					this.State = this.States.FadingOut;
+					this.Color.a -= .01;
 				}
 				else
 				{
-					self.Destroy();
+					this.Destroy();
 				}														
 			};
 
@@ -256,22 +255,25 @@ var GridFader = function(canvasId) {
 		Squares: new Array(),
 
 		GetAllSquares: function() {
+			var boxSize = self.boxSize;
+			var gridSize = self.gridSize;
+
 			var xSquares = Math.ceil(window.innerWidth / boxSize);
 			var ySquares = Math.ceil(window.innerHeight / boxSize);
 
-			ix = 0;
-			iy = 0;
+			var ix = 0;
+			var iy = 0;
 
 			while(iy < ySquares)
 			{
 				while(ix < xSquares)
 				{
-					box = new SquareManagement.Square();
+					var box = new self.SquareManagement.Square();
 					box.X = ix * boxSize + gridSize - 2;		// Subtract 2 since the border center overlaps on the middle pixel.
 					box.Y = iy * boxSize + gridSize - 2;		// Subtract 2 since the border center overlaps on the middle pixel.
 					box.Length = boxSize - gridSize * 2 + 4;	// Add 4 to compensate for 2 pixels on each side being lost to border overlap.
 
-					SquareManagement.Squares.push(box);
+					self.SquareManagement.Squares.push(box);
 
 					ix++;
 				}
@@ -282,8 +284,8 @@ var GridFader = function(canvasId) {
 		},
 
 		GetRandomSquare: function() {
-			var index = Math.floor(Math.random() * (SquareManagement.Squares.length - 1 - 0 + 1)) + 0;
-			var randomSquare = SquareManagement.Squares[index];
+			var index = Math.floor(Math.random() * (self.SquareManagement.Squares.length - 1 - 0 + 1)) + 0;
+			var randomSquare = self.SquareManagement.Squares[index];
 			
 			return randomSquare;
 		}
