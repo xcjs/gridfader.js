@@ -207,10 +207,10 @@ var GridFader = function(canvasId) {
 				brush.beginPath();
 
 				grd.addColorStop(0, this.Color);
-      				grd.addColorStop(1, this.Color.Darken(64));
+				grd.addColorStop(1, this.Color.Darken(64));
 		    	
-		    		brush.fillStyle = grd;
-		    		brush.fillRect(this.X, this.Y, this.Length, this.Length);	
+				brush.fillStyle = grd;
+				brush.fillRect(this.X, this.Y, this.Length, this.Length);	
 				
 				brush.stroke();
 
