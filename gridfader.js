@@ -5,7 +5,7 @@ var GridFader = function(canvasId) {
 	this.gridColor = null;	
 	this.canvas;
 	this.brush;
-	this.boxSize;
+	this.cellSize;
 	this.gridSize;
 
 	var self = this;	
@@ -87,20 +87,20 @@ var GridFader = function(canvasId) {
 
 			Environment.SetCanvasSize();
 			self.DrawGrid();
-			self.SquareManagement.GetAllSquares();
+			self.CellManagement.GetAllCells();
 			
 			clock = setInterval(Events.Tick, clockSpeed);
 		},
 
 		Tick: function()  {
 			if(clockCycle === 7) {
-				var square = self.SquareManagement.GetRandomSquare();
+				var cell = self.CellManagement.GetRandomCell();
 
-				if(square.State === null) {
-					square.FadeIn();
+				if(cell.State === null) {
+					cell.FadeIn();
 				}
-				else if(square.State === square.States.Full) {
-					square.FadeOut();
+				else if(cell.State === cell.States.Full) {
+					cell.FadeOut();
 				}
 
 				clockCycle = 0;
@@ -111,19 +111,19 @@ var GridFader = function(canvasId) {
 			}
 
 			var i = 0;
-			var squares = self.SquareManagement.Squares;
+			var cells = self.CellManagement.Cells;
 
-			while(i < squares.length) {
-				var square = squares[i];
+			while(i < cells.length) {
+				var cell = cells[i];
 
-				if(square.State === square.States.FadingIn) {
-					square.FadeIn();
-					square.Draw();
+				if(cell.State === cell.States.FadingIn) {
+					cell.FadeIn();
+					cell.Draw();
 				}
-				else if(square.State === square.States.FadingOut) {
-					square.FadeOut();
-					if(square.State !== null) {
-						square.Draw();
+				else if(cell.State === cell.States.FadingOut) {
+					cell.FadeOut();
+					if(cell.State !== null) {
+						cell.Draw();
 					}
 				}
 
@@ -137,7 +137,7 @@ var GridFader = function(canvasId) {
 		var canvas = self.canvas;
 		var gridColor = self.gridColor;
 		var gridSize = self.gridSize;
-		var boxSize = self.boxSize;
+		var cellSize = self.cellSize;
 
 		var i = 0;
 		var startingPoint = 0;							
@@ -148,7 +148,7 @@ var GridFader = function(canvasId) {
 		brush.lineWidth = gridSize;
 
 		while(startingPoint < canvas.height) {
-			startingPoint = boxSize * i;						
+			startingPoint = cellSize * i;						
 
 			brush.moveTo(0, startingPoint);	
 
@@ -161,7 +161,7 @@ var GridFader = function(canvasId) {
 		startingPoint = gridSize;
 
 		while(startingPoint < canvas.width) {
-			startingPoint = boxSize * i;
+			startingPoint = cellSize * i;
 
 			brush.moveTo(startingPoint, 0);
 
@@ -175,8 +175,8 @@ var GridFader = function(canvasId) {
 		brush.closePath();									
 	};
 
-	this.SquareManagement = {
-		Square: function() {
+	this.CellManagement = {
+		Cell: function() {
 			this.Color = null;
 			this.Length = 0;
 			this.X = 0;
@@ -196,11 +196,11 @@ var GridFader = function(canvasId) {
 
 			this.Draw = function() {
 				var brush = self.brush;
-				var boxSize = self.boxSize;
+				var cellSize = self.cellSize;
 
 				var grd = brush.createRadialGradient(
 	      			this.X + this.Length / 2, this.Y + this.Length / 2, 0, 
-	      			this.X + this.Length / 2, this.Y + this.Length / 2, boxSize);
+	      			this.X + this.Length / 2, this.Y + this.Length / 2, cellSize);
 
 				this.Clear();
 					
@@ -252,28 +252,28 @@ var GridFader = function(canvasId) {
 			};
 		},
 
-		Squares: new Array(),
+		Cells: new Array(),
 
-		GetAllSquares: function() {
-			var boxSize = self.boxSize;
+		GetAllCells: function() {
+			var cellSize = self.cellSize;
 			var gridSize = self.gridSize;
 
-			var xSquares = Math.ceil(window.innerWidth / boxSize);
-			var ySquares = Math.ceil(window.innerHeight / boxSize);
+			var xCells = Math.ceil(window.innerWidth / cellSize);
+			var yCells = Math.ceil(window.innerHeight / cellSize);
 
 			var ix = 0;
 			var iy = 0;
 
-			while(iy < ySquares)
+			while(iy < yCells)
 			{
-				while(ix < xSquares)
+				while(ix < xCells)
 				{
-					var box = new self.SquareManagement.Square();
-					box.X = ix * boxSize + gridSize - 2;		// Subtract 2 since the border center overlaps on the middle pixel.
-					box.Y = iy * boxSize + gridSize - 2;		// Subtract 2 since the border center overlaps on the middle pixel.
-					box.Length = boxSize - gridSize * 2 + 4;	// Add 4 to compensate for 2 pixels on each side being lost to border overlap.
+					var cell = new self.CellManagement.Cell();
+					cell.X = ix * cellSize + gridSize - 2;		// Subtract 2 since the border center overlaps on the middle pixel.
+					cell.Y = iy * cellSize + gridSize - 2;		// Subtract 2 since the border center overlaps on the middle pixel.
+					cell.Length = cellSize - gridSize * 2 + 4;	// Add 4 to compensate for 2 pixels on each side being lost to border overlap.
 
-					self.SquareManagement.Squares.push(box);
+					self.CellManagement.Cells.push(cell);
 
 					ix++;
 				}
@@ -283,11 +283,11 @@ var GridFader = function(canvasId) {
 			}
 		},
 
-		GetRandomSquare: function() {
-			var index = Math.floor(Math.random() * (self.SquareManagement.Squares.length - 1 - 0 + 1)) + 0;
-			var randomSquare = self.SquareManagement.Squares[index];
+		GetRandomCell: function() {
+			var index = Math.floor(Math.random() * (self.CellManagement.Cells.length - 1 - 0 + 1)) + 0;
+			var randomCell = self.CellManagement.Cells[index];
 			
-			return randomSquare;
+			return randomCell;
 		}
 	}
 };
