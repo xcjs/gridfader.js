@@ -7,12 +7,12 @@ var GridFader = function(canvasId) {
 	this.brush;
 	this.cellSize;
 	this.gridSize;
+	this.cloclSpeed = 500;
 
 	var self = this;	
 
 	var clock = 0;
 	var clockCycle = 0;
-	var clockSpeed = 500;
 
 	this.BindEvents = function() {
 		window.onload = Events.Init;
@@ -89,7 +89,7 @@ var GridFader = function(canvasId) {
 			self.DrawGrid();
 			self.CellManagement.GetAllCells();
 			
-			clock = setInterval(Events.Tick, clockSpeed);
+			clock = setInterval(Events.Tick, self.clockSpeed);
 		},
 
 		Tick: function()  {
@@ -229,15 +229,15 @@ var GridFader = function(canvasId) {
 					this.State = this.States.Full;
 				}
 				else {
-					this.Color.a += .01;
+					this.Color.a += .001;
 				}										
 			};
 
 			this.FadeOut = function() {
-				if(this.Color.a >= .01)
+				if(this.Color.a >= .001)
 				{
 					this.State = this.States.FadingOut;
-					this.Color.a -= .01;
+					this.Color.a -= .001;
 				}
 				else
 				{

@@ -28,14 +28,18 @@
 			(function() {
 				fader = new GridFader('gridfader');
 
-				fader.palette.push(new fader.ColorManagement.Color({ r: 228, g: 77, b: 38 }));	// HTML5 Orange
-				fader.palette.push(new fader.ColorManagement.Color({ r: 2, g: 112, b: 187 }));	// CSS3 Blue
-				fader.palette.push(new fader.ColorManagement.Color({ r: 214, g: 186, b: 51 }));	// JavaScript Yellow
+				fader.palette.push(new fader.ColorManagement.Color({ r: 32, g: 48, b: 51 }));		
+				fader.palette.push(new fader.ColorManagement.Color({ r: 95, g: 104, b: 84 }));		
+				fader.palette.push(new fader.ColorManagement.Color({ r: 115, g: 142, b: 165 }));		
+				fader.palette.push(new fader.ColorManagement.Color({ r: 202, g: 178, b: 161 }));		
+				fader.palette.push(new fader.ColorManagement.Color({ r: 236, g: 238, b: 244 }));		
 
-				fader.gridColor = new fader.ColorManagement.Color({ r: 255, g: 255, b: 255, a: .1 });
+				fader.gridColor = new fader.ColorManagement.Color({ r: 0, g: 0, b: 0, a: .5 });
 
-				fader.cellSize = 50
+				fader.cellSize = 48;
 				fader.gridSize = 5;
+
+				fader.clockSpeed = 3;
 
 				fader.BindEvents();
 			})();
