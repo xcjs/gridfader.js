@@ -7,7 +7,7 @@ var GridFader = function(canvasId) {
 	this.brush;
 	this.cellSize;
 	this.gridSize;
-	this.cloclSpeed = 500;
+	this.clockSpeed = 500;
 
 	var self = this;	
 
