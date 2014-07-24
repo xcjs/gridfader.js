@@ -8,6 +8,7 @@ var GridFader = function(canvasId) {
 	this.cellSize;
 	this.gridSize;
 	this.clockSpeed = 500;
+	this.fadeStep = .001;
 
 	var self = this;	
 
@@ -229,15 +230,16 @@ var GridFader = function(canvasId) {
 					this.State = this.States.Full;
 				}
 				else {
-					this.Color.a += .001;
+					this.Color.a += self.fadeStep;
 				}										
 			};
 
 			this.FadeOut = function() {
-				if(this.Color.a >= .001)
+				this.State = this.States.FadingOut;
+
+				if(this.Color.a >= self.fadeStep)
 				{
-					this.State = this.States.FadingOut;
-					this.Color.a -= .001;
+					this.Color.a -= self.fadeStep;
 				}
 				else
 				{
