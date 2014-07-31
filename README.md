@@ -2,6 +2,11 @@ gridfader.js
 ============
 gridfader.is is a JavaScript object that creates a grid of cells on a provided canvas element that randomly fade in using one random color from a provided palette.
 
+Demo
+----
+A viewable demo is available at [http://xcjs.github.com/gridfader.js/](http://xcjs.github.com/gridfader.js/)
+
+
 Usage
 -----
 The object is designed to handle all of its own event bindings itself once initialized:
