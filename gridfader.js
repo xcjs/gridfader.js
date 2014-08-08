@@ -9,6 +9,7 @@ var GridFader = function(canvasId) {
 	this.gridSize;
 	this.clockSpeed = 500;
 	this.fadeStep = .001;
+	this.cycleSize = 7;
 
 	var self = this;	
 
@@ -94,7 +95,7 @@ var GridFader = function(canvasId) {
 		},
 
 		Tick: function()  {
-			if(clockCycle === 7) {
+			if(clockCycle === self.cycleSize) {
 				var cell = self.CellManagement.GetRandomCell();
 
 				if(cell.State === null) {

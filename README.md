@@ -158,6 +158,22 @@ fader.palette.push(new gridFaderObject.ColorManagement.Color({ r: 32, g: 48, b: 
                 every cell in the grid within this amount of time. The default value is 500.
             </td>
         </tr>
+        <tr>
+            <td style="vertical-align: top;">
+                cycleSize
+            </td>
+            <td style="vertical-align: top;">
+                Integer
+            </td>
+            <td style="text-align: center; vertical-align: top;">
+                
+            </td>
+            <td style="vertical-align: top;">
+                The number of cycles gridFader takes to select a new cell to
+                begin animating, starting with 0. One cycle is equal to the clockSpeed. The
+                default value is 7 which selects a new cell every 8 cycles.
+            </td>
+        </tr>
     </tbody>
 </table>
 
