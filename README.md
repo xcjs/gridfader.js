@@ -58,7 +58,7 @@ Public Properties
                 palette
             </td>
             <td style="vertical-align: top;">
-                Array&lt;GridFader.ColorManager.Color&gt;
+                Array&lt;GridFader.ColorManagement.Color&gt;
             </td>
             <td style="text-align: center; vertical-align: top;">
                 ✓
