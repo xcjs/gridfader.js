@@ -17,8 +17,8 @@ var GridFader = function(canvasId) {
 	var clockCycle = 0;
 
 	this.BindEvents = function() {
-		window.onload = Events.Init;
-		window.onresize = Events.Resize;
+		window.addEventListener('load', Events.Init, false);
+		window.addEventListener('resize', Events.Resize, false)
 	};
 
 	this.ColorManagement = {
