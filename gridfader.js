@@ -3,10 +3,10 @@
 var GridFader = function(canvasId) {
 	this.palette = new Array();
 	this.gridColor = null;	
-	this.canvas;
-	this.brush;
-	this.cellSize;
-	this.gridSize;
+	this.canvas = null;
+	this.brush = null;
+	this.cellSize = 0;
+	this.gridSize = 0;
 	this.clockSpeed = 500;
 	this.fadeStep = .001;
 	this.cycleSize = 7;
