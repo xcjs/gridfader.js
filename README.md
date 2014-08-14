@@ -174,6 +174,21 @@ fader.palette.push(new gridFaderObject.ColorManagement.Color({ r: 32, g: 48, b: 
                 default value is 7 which selects a new cell every 8 cycles.
             </td>
         </tr>
+        <tr>
+            <td>
+                maxCellOpacity
+            </td>
+            <td>
+                Float
+            </td>
+            <td>
+
+            </td>
+            <td>
+                The highest opacity each cell will fade to before fading out and
+                being removed.
+            </td>
+        </tr>
     </tbody>
 </table>
 
