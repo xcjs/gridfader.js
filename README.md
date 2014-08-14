@@ -4,7 +4,7 @@ gridfader.is is a JavaScript object that creates a grid of cells on a provided c
 
 Demo
 ----
-A viewable demo is available at [http://xcjs.github.com/gridfader.js/](http://xcjs.github.com/gridfader.js/)
+A viewable demo is available at [http://xcjs.github.io/gridfader.js/](http://xcjs.github.io/gridfader.js/)
 
 
 Usage
