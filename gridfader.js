@@ -6,6 +6,7 @@ var GridFader = function(canvasId) {
 	this.canvas = null;
 	this.brush = null;
 	this.cellSize = 0;
+	this.maxCellOpacity = 1.0;
 	this.gridSize = 0;
 	this.clockSpeed = 500;
 	this.fadeStep = .001;
@@ -227,7 +228,7 @@ var GridFader = function(canvasId) {
 					this.Color = self.ColorManagement.GetRandomColor();
 					this.Color.a = 0.0;
 				}
-				else if(this.Color.a >= 0.5) {
+				else if(this.Color.a >= self.maxCellOpacity) {
 					this.State = this.States.Full;
 				}
 				else {

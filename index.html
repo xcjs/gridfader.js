@@ -37,12 +37,13 @@
 				fader.gridColor = new fader.ColorManagement.Color({ r: 0, g: 0, b: 0, a: .5 });
 
 				fader.cellSize = 48;
+				fader.maxCellOpacity = 1.0;
 				fader.gridSize = 5;
-				fader.fadeStep = .001;
+				fader.fadeStep = .01;
 
 				fader.clockSpeed = 3;
 
-				fader.cycleSize = 7;
+				fader.cycleSize = 1;
 
 				fader.BindEvents();
 			})();
