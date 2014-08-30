@@ -72,8 +72,8 @@ var GridFader = function(canvasId) {
 
 	var Environment = {
 		SetCanvasSize: function() {
-			self.canvas.height = window.innerHeight;
-			self.canvas.width = window.innerWidth;
+			self.canvas.height = self.canvas.clientHeight;
+			self.canvas.width = self.canvas.clientWidth;
 		}
 	};
 
