@@ -4,7 +4,7 @@ gridfader.is is a JavaScript object that creates a grid of cells on a provided c
 
 Demo
 ----
-A viewable demo is available at [http://xcjs.github.com/gridfader.js/](http://xcjs.github.com/gridfader.js/)
+A viewable demo is available at [http://xcjs.github.io/gridfader.js/](http://xcjs.github.io/gridfader.js/)
 
 
 Usage
@@ -58,7 +58,7 @@ Public Properties
                 palette
             </td>
             <td style="vertical-align: top;">
-                Array&lt;GridFader.ColorManager.Color&gt;
+                Array&lt;GridFader.ColorManagement.Color&gt;
             </td>
             <td style="text-align: center; vertical-align: top;">
                 ✓
@@ -156,6 +156,37 @@ fader.palette.push(new gridFaderObject.ColorManagement.Color({ r: 32, g: 48, b: 
             <td style="vertical-align: top;">
                 The animation clock speed in milliseconds - gridfader.js attempts to animate                 
                 every cell in the grid within this amount of time. The default value is 500.
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;">
+                cycleSize
+            </td>
+            <td style="vertical-align: top;">
+                Integer
+            </td>
+            <td style="text-align: center; vertical-align: top;">
+                
+            </td>
+            <td style="vertical-align: top;">
+                The number of cycles gridFader takes to select a new cell to
+                begin animating, starting with 0. One cycle is equal to the clockSpeed. The
+                default value is 7 which selects a new cell every 8 cycles.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                maxCellOpacity
+            </td>
+            <td>
+                Float
+            </td>
+            <td>
+
+            </td>
+            <td>
+                The highest opacity each cell will fade to before fading out and
+                being removed.
             </td>
         </tr>
     </tbody>

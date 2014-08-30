@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>gridfader.js Demo</title>
+		<meta charset="utf-8" /> 
 
 		<style>
 			* {
@@ -18,6 +19,7 @@
 			#gridfader {
 				display: block;
 				height: 100%;
+				width: 100%;
 			}
 		</style>
 	</head>
@@ -37,10 +39,13 @@
 				fader.gridColor = new fader.ColorManagement.Color({ r: 0, g: 0, b: 0, a: .5 });
 
 				fader.cellSize = 48;
+				fader.maxCellOpacity = .5;
 				fader.gridSize = 5;
 				fader.fadeStep = .001;
 
 				fader.clockSpeed = 3;
+
+				fader.cycleSize = 7;
 
 				fader.BindEvents();
 			})();

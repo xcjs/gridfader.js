@@ -3,12 +3,14 @@
 var GridFader = function(canvasId) {
 	this.palette = new Array();
 	this.gridColor = null;	
-	this.canvas;
-	this.brush;
-	this.cellSize;
-	this.gridSize;
+	this.canvas = null;
+	this.brush = null;
+	this.cellSize = 0;
+	this.maxCellOpacity = 1.0;
+	this.gridSize = 0;
 	this.clockSpeed = 500;
 	this.fadeStep = .001;
+	this.cycleSize = 7;
 
 	var self = this;	
 
@@ -16,8 +18,8 @@ var GridFader = function(canvasId) {
 	var clockCycle = 0;
 
 	this.BindEvents = function() {
-		window.onload = Events.Init;
-		window.onresize = Events.Resize;
+		window.addEventListener('load', Events.Init, false);
+		window.addEventListener('resize', Events.Resize, false)
 	};
 
 	this.ColorManagement = {
@@ -70,8 +72,8 @@ var GridFader = function(canvasId) {
 
 	var Environment = {
 		SetCanvasSize: function() {
-			self.canvas.height = window.innerHeight;
-			self.canvas.width = window.innerWidth;
+			self.canvas.height = self.canvas.clientHeight;
+			self.canvas.width = self.canvas.clientWidth;
 		}
 	};
 
@@ -94,7 +96,7 @@ var GridFader = function(canvasId) {
 		},
 
 		Tick: function()  {
-			if(clockCycle === 7) {
+			if(clockCycle === self.cycleSize) {
 				var cell = self.CellManagement.GetRandomCell();
 
 				if(cell.State === null) {
@@ -226,7 +228,7 @@ var GridFader = function(canvasId) {
 					this.Color = self.ColorManagement.GetRandomColor();
 					this.Color.a = 0.0;
 				}
-				else if(this.Color.a >= 0.5) {
+				else if(this.Color.a >= self.maxCellOpacity) {
 					this.State = this.States.Full;
 				}
 				else {
