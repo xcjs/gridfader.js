@@ -1,6 +1,6 @@
-'use strict';
-
 var GridFader = function(canvasId) {
+	'use strict';
+
 	this.palette = new Array();
 	this.gridColor = null;	
 	this.canvas = null;
