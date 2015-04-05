@@ -138,7 +138,7 @@ fader.palette.push(new gridFaderObject.ColorManagement.Color({ r: 32, g: 48, b: 
                 
             </td>
             <td style="vertical-align: top;">
-                Any decimal between 0.0 and 1.0 - this is translated to as the CSS RGBA
+                Any decimal between 0.0 and 1.0 - this is translated as the CSS RGBA
                 alpha value for the cell color added or subtracted during each tick of
                 the clock. The default value is .001.
             </td>
