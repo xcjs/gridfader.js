@@ -58,7 +58,15 @@ var GridFader = function(canvasId) {
 			var palette = self.palette;
 
 			var index = Math.floor(Math.random() * (palette.length - 1 - 0 + 1)) + 0;
-			return palette[index];
+			var refColor = palette[index];
+
+			var color = new self.ColorManagement.Color();
+			color.r = refColor.r;
+			color.g = refColor.g;
+			color.b = refColor.b;
+			color.a = refColor.a;
+
+			return color;
 		}
 	};
 
