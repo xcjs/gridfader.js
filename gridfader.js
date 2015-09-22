@@ -218,15 +218,16 @@ var GridFader = function(canvasId) {
 				brush.stroke();
 
 				brush.closePath();
-				brush.fillStyle = null;
 			}
 
 			this.FadeIn = function() {
-				this.State = this.States.FadingIn;
+				if(this.State === null) {
+					this.State = this.States.FadingIn;
+				}
 
 				if(this.Color === null) {
 					this.Color = self.ColorManagement.GetRandomColor();
-					this.Color.a = 0.0;
+					this.Color.a = 0;
 				}
 				else if(this.Color.a >= self.maxCellOpacity) {
 					this.State = this.States.Full;
@@ -239,12 +240,10 @@ var GridFader = function(canvasId) {
 			this.FadeOut = function() {
 				this.State = this.States.FadingOut;
 
-				if(this.Color.a >= self.fadeStep)
-				{
+				if(this.Color.a >= self.fadeStep && this.Color !== null) {
 					this.Color.a -= self.fadeStep;
 				}
-				else
-				{
+				else {
 					this.Destroy();
 				}														
 			};
